@@ -1,0 +1,8 @@
+autodetach on
+startup_message off
+hardstatus alwayslastline
+shelltitle 'bash'
+mousetrack on
+hardstatus string '%{gk}[%{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= w}%?%+Lw%?%? %{g}][%{d}%l%{g}]%{W}'
+setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+

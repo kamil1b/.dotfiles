@@ -1,0 +1,33 @@
+actions:
+  pre:
+    vim-plug-install: test -e ~/.vim/autoload/plug.vim || (mkdir -p ~/.vim/autoload;
+      curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim)
+  vim-plug: vim +PlugInstall +qall
+config:
+  backup: true
+  banner: true
+  create: true
+  dotpath: dotfiles
+  keepdot: false
+  longkey: false
+dotfiles:
+  f_rc:
+    dst: ~/.ssh/rc
+    src: ssh/rc
+  f_screenrc:
+    dst: ~/.screenrc
+    src: screenrc
+  f_vimrc:
+    actions:
+    - vim-plug-install
+    - vim-plug
+    dst: ~/.vimrc
+    src: vimrc
+profiles:
+  remote:
+    dotfiles:
+    - f_screenrc
+    - f_rc
+  work:
+    dotfiles:
+    - f_vimrc

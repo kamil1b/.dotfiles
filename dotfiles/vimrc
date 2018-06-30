@@ -1,0 +1,129 @@
+set nocompatible
+filetype plugin on
+
+call plug#begin('~/.vim/plugged')
+" Common
+" ============================================================================
+Plug 'tpope/vim-sensible'
+Plug 'kien/ctrlp.vim'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'sheerun/vim-polyglot'
+Plug 'myusuf3/numbers.vim'
+" Plug 'wikitopian/hardmode'
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-commentary'
+Plug 'Townk/vim-autoclose'
+Plug 'wincent/terminus'
+Plug 'vim-syntastic/syntastic'
+
+" Search
+" ============================================================================
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Theme
+" ============================================================================
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Python
+" ============================================================================
+Plug 'nvie/vim-flake8'
+Plug 'vim-scripts/indentpython.vim'
+" Plug 'tmhedberg/SimpylFold'
+
+" C++
+" ============================================================================
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" Plug 'vim-scripts/a.vim'
+
+" Fish
+" ============================================================================
+Plug 'dag/vim-fish'
+
+" Git
+" ============================================================================
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Files
+" ============================================================================
+Plug 'scrooloose/nerdtree'
+
+call plug#end()
+
+" Configuration
+" ============================================================================
+
+" Common config
+syntax on
+set encoding=utf-8
+set nu
+set clipboard=unnamedplus
+set scrolloff=3
+set shell=/bin/bash
+
+" SipmlyFold
+" let g:SimpylFold_docstring_preview = 1
+" HardMode
+" autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+" nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+" YouCompileMe
+let g:ycm_error_sym = ''
+let g:ycm_warning_sym = ''
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_seed_identifiers_with_syntax = ['<TAB>', '<ENTER>']
+let g:ycm_key_list_stop_completion = ['<C-y>']
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <F5>  :YcmDiags<CR>
+map <leader>r :GoToReferences<CR>
+" NERDTree
+map <F3> :NERDTreeToggle<CR>
+map ,t :NERDTreeFind<CR>
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
+" Tagbar
+map <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'luna'
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+" Ctrlp
+" let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+" Files settings
+" ============================================================================
+
+set expandtab autoindent fileformat=unix tabstop=4 softtabstop=4 shiftwidth=4
+
+" PEP 8
+au FileType py setlocal textwidth=140
+
+" c++
+au FileType cpp,hpp setlocal textwidth=79
+
+" Dockerfile
+au BufNewFile,BufRead Dockerfile setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+augroup WhitespaceMatch
+  " Remove ALL autocommands for the WhitespaceMatch group.
+  autocmd!
+  autocmd BufWinEnter * let w:whitespace_match_number =
+        \ matchadd('ExtraWhitespace', '\s\+$')
+  autocmd InsertEnter * call s:ToggleWhitespaceMatch('i')
+  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
+augroup END
+function! s:ToggleWhitespaceMatch(mode)
+  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+  if exists('w:whitespace_match_number')
+    call matchdelete(w:whitespace_match_number)
+    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
+  else
+    " Something went wrong, try to be graceful.
+    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
+  endif
+endfunction
