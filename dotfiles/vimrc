@@ -27,7 +27,7 @@ Plug 'junegunn/fzf.vim'
 " ============================================================================
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 
 " Python
 " ============================================================================
@@ -80,7 +80,7 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_seed_identifiers_with_syntax = ['<TAB>', '<ENTER>']
 let g:ycm_key_list_stop_completion = ['<C-y>']
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-map <F6>  :YcmDiags<CR>
+map <F5>  :YcmDiags<CR>
 map <leader>r :GoToReferences<CR>
 " NERDTree
 map <F3> :NERDTreeToggle<CR>
@@ -89,20 +89,25 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 " Tagbar
 map <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+" Minimap
+let g:minimap_toggle='<F9>'
+
+" ============================================================================
+" Theme and look
+set termguicolors
+set background=light
+colorscheme solarized8
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'papercolor'
+let g:airline_theme = 'solarized'
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:solarized_menu=0
-let g:solarized_termcolors=256
-set background=light
-colorscheme solarized
-" Ctrlp
-" let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-" Minimap
-let g:minimap_toggle='<F9>'
+" Look
+set list
+set updatetime=100
+" GitGutter
+" let g:gitgutter_highlight_lines = 1
 
 " Files settings
 " ============================================================================
