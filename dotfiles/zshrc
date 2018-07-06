@@ -1,0 +1,23 @@
+source ~/.zsh/zplug/init.zsh
+
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "plugins/dnf", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/gpg-agent", from:oh-my-zsh
+zplug "plugins/pip", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
+
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+zplug "agkozak/agkozak-zsh-theme"
+# zplug "geometry-zsh/geometry"
+
+zplug load
+
+export PATH=~/.local/bin:$PATH
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
