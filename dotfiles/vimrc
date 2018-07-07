@@ -4,19 +4,32 @@ filetype plugin on
 call plug#begin('~/.vim/plugged')
 " Common
 " ============================================================================
-Plug 'tpope/vim-sensible'
 Plug 'kien/ctrlp.vim'
-Plug 'michaeljsmith/vim-indent-object'
-Plug 'sheerun/vim-polyglot'
-Plug 'myusuf3/numbers.vim'
-" Plug 'wikitopian/hardmode'
 Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-commentary'
+Plug 'michaeljsmith/vim-indent-object'
+" Plug 'myusuf3/numbers.vim'
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Townk/vim-autoclose'
-Plug 'wincent/terminus'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-sensible'
+Plug 'sheerun/vim-polyglot'
 Plug 'vim-syntastic/syntastic'
+" Plug 'wikitopian/hardmode'
+Plug 'wincent/terminus'
+
+" Git
+" ============================================================================
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Files
+" ============================================================================
+Plug 'scrooloose/nerdtree'
+
+" Minimap
+" ============================================================================
 Plug 'severin-lemaignan/vim-minimap'
-Plug 'Shougo/denite.nvim'
 
 " Search
 " ============================================================================
@@ -29,30 +42,19 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lifepillar/vim-solarized8'
 
-" Python
+" Vim cheatseeet
 " ============================================================================
-Plug 'nvie/vim-flake8'
-Plug 'vim-scripts/indentpython.vim'
-" Plug 'tmhedberg/SimpylFold'
+Plug 'lifepillar/vim-cheat40'
 
-" C++
+" Language support
 " ============================================================================
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-" Plug 'vim-scripts/a.vim'
-
-" Fish
-" ============================================================================
-Plug 'dag/vim-fish'
-
-" Git
-" ============================================================================
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-" Files
-" ============================================================================
-Plug 'scrooloose/nerdtree'
+" Python
+Plug 'nvie/vim-flake8'
+Plug 'vim-scripts/indentpython.vim'
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 call plug#end()
 
@@ -62,7 +64,7 @@ call plug#end()
 " Common config
 syntax enable
 set encoding=utf-8
-set nu
+set number
 set clipboard=unnamedplus
 set scrolloff=3
 set shell=/bin/bash
@@ -82,7 +84,6 @@ let g:ycm_seed_identifiers_with_syntax = ['<TAB>', '<ENTER>']
 let g:ycm_key_list_stop_completion = ['<C-y>']
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <F5>  :YcmDiags<CR>
-map <leader>r :GoToReferences<CR>
 " NERDTree
 map <F3> :NERDTreeToggle<CR>
 map ,t :NERDTreeFind<CR>
@@ -95,9 +96,10 @@ let g:minimap_toggle='<F9>'
 
 " ============================================================================
 " Theme and look
-set termguicolors
-set background=light
 colorscheme solarized8
+set background=light
+set foldmethod=syntax
+set termguicolors
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'solarized'
@@ -108,8 +110,14 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 set list
 set updatetime=100
 " GitGutter
-" let g:gitgutter_highlight_lines = 1
-
+map <F8> :GitGutterLineHighlightsToggle<CR>
+" Vim indent guides
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_enable_on_vim_startup = 1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#eee8d5
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#fdf6e3
+" Markdown
+let g:vim_markdown_folding_disabled = 1
 " Files settings
 " ============================================================================
 
@@ -123,23 +131,3 @@ au FileType cpp,hpp setlocal textwidth=79
 
 " Dockerfile
 au BufNewFile,BufRead Dockerfile setlocal tabstop=2 softtabstop=2 shiftwidth=2
-
-highlight ExtraWhitespace ctermbg=red guibg=red
-augroup WhitespaceMatch
-  " Remove ALL autocommands for the WhitespaceMatch group.
-  autocmd!
-  autocmd BufWinEnter * let w:whitespace_match_number =
-        \ matchadd('ExtraWhitespace', '\s\+$')
-  autocmd InsertEnter * call s:ToggleWhitespaceMatch('i')
-  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
-augroup END
-function! s:ToggleWhitespaceMatch(mode)
-  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
-  if exists('w:whitespace_match_number')
-    call matchdelete(w:whitespace_match_number)
-    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
-  else
-    " Something went wrong, try to be graceful.
-    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
-  endif
-endfunction
