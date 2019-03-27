@@ -1,4 +1,7 @@
 actions:
+  pre:
+    zplug-install: test -e ~/.zsh/zplug || (git clone https://github.com/zplug/zplug
+      ~/.zsh/zplug)
   vim-plug: vim +PlugInstall +qall
   zplug: (zsh -c "source ~/.zshrc && zplug install")
 config:
@@ -9,40 +12,56 @@ config:
   keepdot: false
   longkey: false
 dotfiles:
+  liquidpromptrc:
+    dst: ~/.config/liquidpromptrc
+    src: prompt/config/liquidpromptrc
   f_rc:
     dst: ~/.ssh/rc
     src: ssh/rc
   f_screenrc:
     dst: ~/.screenrc
     src: screenrc
-  f_vimrc:
+  liquidprompt_bashrc:
+    dst: ~/.bashrc
+    src: prompt/liquidprompt_bashrc
+  spacemacs:
+    dst: ~/.emacs.d
+    link: true
+    src: editors/spacemacs
+  spacemacs_config:
+    dst: ~/.spacemacs
+    src: editors/spacemacs_config
+  vim:
     actions:
     - vim-plug
     dst: ~/.vimrc
-    src: vimrc
-  f_zshrc:
+    src: editors/vimrc
+  zplug:
     actions:
     - zplug-install
     - zplug
     dst: ~/.zshrc
-    src: zshrc
-  spacemacs:
-    dst: ~/.emacs.d
-    link: true
-    src: spacemacs
-  spacemacs_config:
-    dst: ~/.spacemacs
-    src: spacemacs_config
+    src: prompt/zplug
 profiles:
+  liquidprompt:
+    dotfiles:
+    - liquidprompt_bashrc
+    - liquidpromptrc
   remote:
     dotfiles:
     - f_screenrc
     - f_rc
+    - vim
+    include:
+    - liquidprompt
+    - spacemacs
   spacemacs:
     dotfiles:
     - spacemacs
     - spacemacs_config
   work:
     dotfiles:
-    - f_vimrc
-    - f_zshrc
+    - vim
+    include:
+    - liquidprompt
+    - spacemacs
