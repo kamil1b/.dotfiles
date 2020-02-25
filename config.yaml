@@ -1,9 +1,9 @@
-actions:
-  pre:
-    zplug-install: test -e ~/.zsh/zplug || (git clone https://github.com/zplug/zplug
-      ~/.zsh/zplug)
-  vim-plug: vim +PlugInstall +qall
-  zplug: (zsh -c "source ~/.zshrc && zplug install")
+# actions:
+#   pre:
+#     zplug-install: test -e ~/.zsh/zplug || (git clone https://github.com/zplug/zplug
+#       ~/.zsh/zplug)
+#   vim-plug: vim +PlugInstall +qall
+#   zplug: (zsh -c "source ~/.zshrc && zplug install")
 config:
   backup: true
   banner: true
@@ -12,25 +12,12 @@ config:
   keepdot: false
   longkey: false
 dotfiles:
-  liquidpromptrc:
-    dst: ~/.config/liquidpromptrc
-    src: prompt/config/liquidpromptrc
   f_rc:
     dst: ~/.ssh/rc
     src: ssh/rc
   f_screenrc:
     dst: ~/.screenrc
     src: screenrc
-  liquidprompt_bashrc:
-    dst: ~/.bashrc
-    src: prompt/liquidprompt_bashrc
-  spacemacs:
-    dst: ~/.emacs.d
-    link: true
-    src: editors/spacemacs
-  spacemacs_config:
-    dst: ~/.spacemacs
-    src: editors/spacemacs_config
   vim:
     actions:
     - vim-plug
@@ -43,10 +30,6 @@ dotfiles:
     dst: ~/.zshrc
     src: prompt/zplug
 profiles:
-  liquidprompt:
-    dotfiles:
-    - liquidprompt_bashrc
-    - liquidpromptrc
   remote:
     dotfiles:
     - f_screenrc
@@ -54,14 +37,6 @@ profiles:
     - vim
     include:
     - liquidprompt
-    - spacemacs
-  spacemacs:
-    dotfiles:
-    - spacemacs
-    - spacemacs_config
   work:
     dotfiles:
     - vim
-    include:
-    - liquidprompt
-    - spacemacs

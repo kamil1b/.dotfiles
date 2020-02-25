@@ -1,4 +1,0 @@
-[[ $- != *i* ]] && return;
-
-readonly dotfiles=$(readlink -f ~/dotfiles/dotfiles)
-source "${dotfiles}/liquidprompt/liquidprompt"
