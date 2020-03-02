@@ -15,7 +15,21 @@ dotfiles:
   d_doom.d:
     src: doom.d
     dst: ~/.doom.d
+  d_zsh:
+    src: zsh
+    dst: ~/.zsh
+    upignore:
+    - '.hist_file'
+    - '.z'
+    - '.zsh-plugins.sh'
+  f_zshrc:
+    src: zshrc
+    dst: ~/.zshrc
 profiles:
+  zsh:
+    dotfiles:
+    - d_zsh
+    - f_zshrc
   remote:
     dotfiles:
     - f_screenrc
@@ -23,3 +37,5 @@ profiles:
   work:
     dotfiles:
     - d_doom.d
+    include:
+    - zsh
