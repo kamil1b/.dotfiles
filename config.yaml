@@ -18,7 +18,15 @@ dotfiles:
   d_zsh:
     src: zsh
     dst: ~/.zsh
+    instignore:
+    - '.hist_file'
+    - '.z'
+    - '.zsh-plugins.sh'
     upignore:
+    - '.hist_file'
+    - '.z'
+    - '.zsh-plugins.sh'
+    cmpignore:
     - '.hist_file'
     - '.z'
     - '.zsh-plugins.sh'

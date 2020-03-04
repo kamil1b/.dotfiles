@@ -21,3 +21,8 @@ function get_antibody_if_needed()
         update-packages
     fi
 }
+
+function load_additional_config()
+{
+    source "$1/init.sh"
+}
